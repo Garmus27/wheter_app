@@ -11,5 +11,9 @@ services:
       - .env
     tty: true
     stdin_open: true
+    command: ["python", "-u", "app.py"]
+
+
+
 
 
