@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from Settings import obtener_unidades
 from errores import manejar_error_api
 import chardet
+from datetime import datetime
 
 load_dotenv()
 api_key = os.getenv('api_key')
@@ -67,14 +68,19 @@ def obtener_pronostico(ciudad):
 
 
 
+
+
 def guardar_consulta(ciudad, temperatura, presion, humedad, descripcion):
+    fecha_actual = datetime.now().strftime("%Y-%m-%d")  # Formato YYYY-MM-DD
     with open("consultas_clima.txt", "a") as file:
+        file.write(f"Fecha: {fecha_actual}\n")  # Agregar la fecha a la consulta
         file.write(f"Ciudad: {ciudad}\n")
         file.write(f"Temperatura: {temperatura}°{unidad_medida()}\n")
         file.write(f"Presion: {presion} hPa\n")
         file.write(f"Humedad: {humedad}%\n")
         file.write(f"Descripcion: {descripcion}\n")
         file.write("-------------------------\n")
+
 
 
 
@@ -106,6 +112,7 @@ def filtrar_por_fecha(fecha):
     try:
         codificacion = detectar_codificacion("consultas_clima.txt")
         with open("consultas_clima.txt", "r", encoding=codificacion) as file:
+            print("-------------------------------------------------------")
             print(f"\nConsultas guardadas para la fecha: {fecha}")
             consultas = file.readlines()
             mostrar = False
@@ -116,8 +123,10 @@ def filtrar_por_fecha(fecha):
                     mostrar = False
                 if mostrar:
                     print(linea, end='')
+            print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
+
 
 
 
