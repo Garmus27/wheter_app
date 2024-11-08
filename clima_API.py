@@ -96,17 +96,27 @@ def filtrar_por_ciudad(ciudad):
             print("-------------------------------------------------------")
             print(f"\nConsultas guardadas para la ciudad: {ciudad}")
             consultas = file.readlines()
+            
+            consulta_actual = []
             mostrar = False
             for linea in consultas:
                 if "Ciudad:" in linea and ciudad.lower() in linea.lower():
-                    mostrar = True
-                if linea.strip() == "-------------------------":
-                    mostrar = False
+                    mostrar = True  # Indicar que se encontró la ciudad
+                elif linea.strip() == "-------------------------":
+                    if mostrar and consulta_actual:
+                        print("".join(consulta_actual))
+                        print("-------------------------------------------------------")
+                    consulta_actual = []  # Reiniciar para la siguiente consulta
+                    mostrar = False  # Reiniciar el indicador
                 if mostrar:
-                    print(linea, end='')
-            print("-------------------------------------------------------")
+                    consulta_actual.append(linea)
+                    
+            if mostrar and consulta_actual:
+                print("".join(consulta_actual))
+                print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
+
 
 def filtrar_por_fecha(fecha):
     try:
@@ -115,17 +125,27 @@ def filtrar_por_fecha(fecha):
             print("-------------------------------------------------------")
             print(f"\nConsultas guardadas para la fecha: {fecha}")
             consultas = file.readlines()
+            
+            consulta_actual = []
             mostrar = False
             for linea in consultas:
                 if "Fecha:" in linea and fecha in linea:
-                    mostrar = True
-                if linea.strip() == "-------------------------":
-                    mostrar = False
+                    mostrar = True  # Indicar que se encontró la fecha
+                elif linea.strip() == "-------------------------":
+                    if mostrar and consulta_actual:
+                        print("".join(consulta_actual))
+                        print("-------------------------------------------------------")
+                    consulta_actual = []  # Reiniciar para la siguiente consulta
+                    mostrar = False  # Reiniciar el indicador
                 if mostrar:
-                    print(linea, end='')
-            print("-------------------------------------------------------")
+                    consulta_actual.append(linea)
+                    
+            if mostrar and consulta_actual:
+                print("".join(consulta_actual))
+                print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
+
 
 
 
