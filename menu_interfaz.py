@@ -122,17 +122,28 @@ def mostrar_consultas_guardadas():
         codificacion = detectar_codificacion("consultas_clima.txt")
         with open("consultas_clima.txt", "r", encoding=codificacion) as file:
             print("-------------------------------------------------------")
-            print(f"\nConsultas guardadas")
-            consultas = file.readlines()
-            mostrar = False
+            print("\nConsultas guardadas:")
+            consultas = file.readlines()  # Leer todas las líneas del archivo
+            
+            # Para mostrar cada consulta como un bloque separado
+            consulta_actual = []
             for linea in consultas:
                 if linea.strip() == "-------------------------":
-                    mostrar = False
-                if mostrar:
-                    print(linea, end='')
-            print("-------------------------------------------------------")
+                    if consulta_actual:
+                        print("".join(consulta_actual))  # Imprimir el bloque completo de la consulta
+                        print("-------------------------------------------------------")
+                        consulta_actual = []  # Resetear para la siguiente consulta
+                else:
+                    consulta_actual.append(linea)  # Agregar línea a la consulta actual
+            
+            # Imprimir cualquier consulta pendiente al final
+            if consulta_actual:
+                print("".join(consulta_actual))
+                print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
+
+
 
 
 if __name__ == "__main__":

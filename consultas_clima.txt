@@ -16,3 +16,17 @@ Presion: 1021 hPa
 Humedad: 75%
 Descripcion: algo de nubes
 -------------------------
+Fecha: 2024-11-07
+Ciudad: misiones
+Temperatura: 14.44°C
+Presion: 1019 hPa
+Humedad: 47%
+Descripcion: nubes
+-------------------------
+Fecha: 2024-11-07
+Ciudad: paris
+Temperatura: 7.22°C
+Presion: 1026 hPa
+Humedad: 98%
+Descripcion: niebla
+-------------------------
