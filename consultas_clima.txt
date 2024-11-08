@@ -1,0 +1,18 @@
+Ciudad: mendoza
+Temperatura: 27.74°C
+Presion: 999 hPa
+Humedad: 44%
+Descripcion: cielo claro
+-------------------------
+Ciudad: mendoza
+Temperatura: 27.74°C
+Presion: 999 hPa
+Humedad: 44%
+Descripcion: cielo claro
+-------------------------
+Ciudad: barcelona
+Temperatura: 20.02°K
+Presion: 1021 hPa
+Humedad: 75%
+Descripcion: algo de nubes
+-------------------------

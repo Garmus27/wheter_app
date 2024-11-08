@@ -1,0 +1,7 @@
+imagen
+
+docker build -t appclima .
+
+correr el docker
+
+docker run -it --rm -d --name mi_appclima appclima 
