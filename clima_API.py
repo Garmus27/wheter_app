@@ -3,6 +3,7 @@ import requests
 from dotenv import load_dotenv
 from Settings import obtener_unidades
 from errores import manejar_error_api
+import chardet
 
 load_dotenv()
 api_key = os.getenv('api_key')
@@ -75,9 +76,18 @@ def guardar_consulta(ciudad, temperatura, presion, humedad, descripcion):
         file.write(f"Descripcion: {descripcion}\n")
         file.write("-------------------------\n")
 
+
+
+def detectar_codificacion(archivo):
+    with open(archivo, 'rb') as file:
+        resultado = chardet.detect(file.read())
+        return resultado['encoding']
+
 def filtrar_por_ciudad(ciudad):
     try:
-        with open("consultas_clima.txt", "r") as file:
+        codificacion = detectar_codificacion("consultas_clima.txt")
+        with open("consultas_clima.txt", "r", encoding=codificacion) as file:
+            print("-------------------------------------------------------")
             print(f"\nConsultas guardadas para la ciudad: {ciudad}")
             consultas = file.readlines()
             mostrar = False
@@ -88,12 +98,14 @@ def filtrar_por_ciudad(ciudad):
                     mostrar = False
                 if mostrar:
                     print(linea, end='')
+            print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
 
 def filtrar_por_fecha(fecha):
     try:
-        with open("consultas_clima.txt", "r") as file:
+        codificacion = detectar_codificacion("consultas_clima.txt")
+        with open("consultas_clima.txt", "r", encoding=codificacion) as file:
             print(f"\nConsultas guardadas para la fecha: {fecha}")
             consultas = file.readlines()
             mostrar = False
@@ -106,6 +118,7 @@ def filtrar_por_fecha(fecha):
                     print(linea, end='')
     except FileNotFoundError:
         print("No hay consultas guardadas.")
+
 
 
 def unidad_medida():

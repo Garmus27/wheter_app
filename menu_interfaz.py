@@ -1,4 +1,4 @@
-from clima_API import obtener_clima, obtener_pronostico,filtrar_por_ciudad,filtrar_por_fecha
+from clima_API import obtener_clima, obtener_pronostico,filtrar_por_ciudad,filtrar_por_fecha,detectar_codificacion
 from Settings import cambiar_unidades, obtener_unidades
 from errores import ValidationError, APIError
 from datetime import datetime
@@ -112,16 +112,28 @@ def mostrar_configuracion():
             break
         else:
             print("Opción no válida. Por favor, intente de nuevo.")
+            
+codificacion = detectar_codificacion("consultas_clima.txt")
 
+
+        
 def mostrar_consultas_guardadas():
     try:
-        with open("consultas_clima.txt", "r") as file:
-            print("\nConsultas guardadas:")
+        codificacion = detectar_codificacion("consultas_clima.txt")
+        with open("consultas_clima.txt", "r", encoding=codificacion) as file:
+            print("-------------------------------------------------------")
+            print(f"\nConsultas guardadas")
             consultas = file.readlines()
-            for consulta in consultas:
-                print(consulta, end='')
+            mostrar = False
+            for linea in consultas:
+                if linea.strip() == "-------------------------":
+                    mostrar = False
+                if mostrar:
+                    print(linea, end='')
+            print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
+
 
 if __name__ == "__main__":
     mostrar_menu()
