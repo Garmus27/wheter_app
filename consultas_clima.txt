@@ -1,0 +1,56 @@
+Ciudad: mendoza
+Temperatura: 27.74°C
+Presion: 999 hPa
+Humedad: 44%
+Descripcion: cielo claro
+-------------------------
+Ciudad: mendoza
+Temperatura: 27.74°C
+Presion: 999 hPa
+Humedad: 44%
+Descripcion: cielo claro
+-------------------------
+Ciudad: barcelona
+Temperatura: 20.02°K
+Presion: 1021 hPa
+Humedad: 75%
+Descripcion: algo de nubes
+-------------------------
+Ciudad: cordoba
+Temperatura: 31.96°C
+Presion: 1001 hPa
+Humedad: 45%
+Descripcion: cielo claro
+-------------------------
+Ciudad: valencia
+Temperatura: 13.56°C
+Presion: 1024 hPa
+Humedad: 97%
+Descripcion: muy nuboso
+-------------------------
+Ciudad: valencia
+Temperatura: 13.56°C
+Presion: 1024 hPa
+Humedad: 97%
+Descripcion: muy nuboso
+-------------------------
+Ciudad: valencia
+Temperatura: 13.56°C
+Presion: 1024 hPa
+Humedad: 97%
+Descripcion: muy nuboso
+-------------------------
+Fecha: 2024-11-07 20:16:40
+Ciudad: valencia
+Temperatura: 13°C
+Presion: 1024 hPa
+Humedad: 96%
+Descripcion: nubes dispersas
+-------------------------
+Fecha: 2024-11-07 20:16:45
+Ciudad: cordoba
+Temperatura: 21.55°C
+Presion: 1013 hPa
+Humedad: 58%
+Descripcion: nubes dispersas
+-------------------------
