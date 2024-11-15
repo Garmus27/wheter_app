@@ -4,4 +4,17 @@ docker build -t appclima .
 
 correr el docker
 
+<<<<<<< HEAD
 docker run -it --rm -d --name mi_appclima appclima 
+=======
+docker run -it --rm climaappoe-app
+
+
+para correr el docker compose
+
+ -docker-compose run app bash
+
+ -python app.py
+
+
+>>>>>>> e445196bd51b30efa54b97a2a65843bb9d73fd6a

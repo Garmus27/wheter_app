@@ -3,10 +3,11 @@ import requests
 from dotenv import load_dotenv
 from Settings import obtener_unidades
 from errores import manejar_error_api
+import chardet
 from datetime import datetime
 
 load_dotenv()
-api_key = os.getenv('api_key')  
+api_key = os.getenv('api_key')
 base_url = "http://api.openweathermap.org/data/2.5/"
 medidas = obtener_unidades()
 
@@ -67,10 +68,12 @@ def obtener_pronostico(ciudad):
 
 
 
+
+
 def guardar_consulta(ciudad, temperatura, presion, humedad, descripcion):
-    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    fecha_actual = datetime.now().strftime("%Y-%m-%d")  # Formato YYYY-MM-DD
     with open("consultas_clima.txt", "a") as file:
-        file.write(f"Fecha: {fecha}\n")
+        file.write(f"Fecha: {fecha_actual}\n")  # Agregar la fecha a la consulta
         file.write(f"Ciudad: {ciudad}\n")
         file.write(f"Temperatura: {temperatura}°{unidad_medida()}\n")
         file.write(f"Presion: {presion} hPa\n")
@@ -78,37 +81,72 @@ def guardar_consulta(ciudad, temperatura, presion, humedad, descripcion):
         file.write(f"Descripcion: {descripcion}\n")
         file.write("-------------------------\n")
 
+
+
+
+def detectar_codificacion(archivo):
+    with open(archivo, 'rb') as file:
+        resultado = chardet.detect(file.read())
+        return resultado['encoding']
+
 def filtrar_por_ciudad(ciudad):
     try:
-        with open("consultas_clima.txt", "r") as file:
+        codificacion = detectar_codificacion("consultas_clima.txt")
+        with open("consultas_clima.txt", "r", encoding=codificacion) as file:
+            print("-------------------------------------------------------")
             print(f"\nConsultas guardadas para la ciudad: {ciudad}")
             consultas = file.readlines()
+            
+            consulta_actual = []
             mostrar = False
             for linea in consultas:
                 if "Ciudad:" in linea and ciudad.lower() in linea.lower():
-                    mostrar = True
-                if linea.strip() == "-------------------------":
-                    mostrar = False
+                    mostrar = True  # Indicar que se encontró la ciudad
+                elif linea.strip() == "-------------------------":
+                    if mostrar and consulta_actual:
+                        print("".join(consulta_actual))
+                        print("-------------------------------------------------------")
+                    consulta_actual = []  # Reiniciar para la siguiente consulta
+                    mostrar = False  # Reiniciar el indicador
                 if mostrar:
-                    print(linea, end='')
+                    consulta_actual.append(linea)
+                    
+            if mostrar and consulta_actual:
+                print("".join(consulta_actual))
+                print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
 
+
 def filtrar_por_fecha(fecha):
     try:
-        with open("consultas_clima.txt", "r") as file:
+        codificacion = detectar_codificacion("consultas_clima.txt")
+        with open("consultas_clima.txt", "r", encoding=codificacion) as file:
+            print("-------------------------------------------------------")
             print(f"\nConsultas guardadas para la fecha: {fecha}")
             consultas = file.readlines()
+            
+            consulta_actual = []
             mostrar = False
             for linea in consultas:
                 if "Fecha:" in linea and fecha in linea:
-                    mostrar = True
-                if linea.strip() == "-------------------------":
-                    mostrar = False
+                    mostrar = True  # Indicar que se encontró la fecha
+                elif linea.strip() == "-------------------------":
+                    if mostrar and consulta_actual:
+                        print("".join(consulta_actual))
+                        print("-------------------------------------------------------")
+                    consulta_actual = []  # Reiniciar para la siguiente consulta
+                    mostrar = False  # Reiniciar el indicador
                 if mostrar:
-                    print(linea, end='')
+                    consulta_actual.append(linea)
+                    
+            if mostrar and consulta_actual:
+                print("".join(consulta_actual))
+                print("-------------------------------------------------------")
     except FileNotFoundError:
         print("No hay consultas guardadas.")
+
+
 
 
 
@@ -120,5 +158,5 @@ def unidad_medida():
         return "F"
     else:
         return "K"
-    
+
 
